@@ -649,29 +649,41 @@ afterDraw(chart) {
 
   });
 
-  // =====================
-  // // ガイド線
-  // // =====================
-  
-  ctx.strokeStyle = "888";
-  ctx.lineWidth = 1;
-  
+ // =====================
+ // ガイド線
+ // // =====================
+
+ctx.strokeStyle = "#888";
+ctx.lineWidth = 1;
+
+// 左上（C）
+const leftArc = outerMeta.data[2];
+
+// 右上（P）
+const rightArc = outerMeta.data[0];
+
+function drawGuideLine(arc, dx, dy){
+
+  const angle =
+    (arc.startAngle + arc.endAngle) / 2;
+
+  const startX =
+    arc.x + Math.cos(angle) * (arc.outerRadius + 10);
+
+  const startY =
+    arc.y + Math.sin(angle) * (arc.outerRadius + 10);
+
   ctx.beginPath();
-  ctx.moveTo(centerX, centerY);
-  ctx.lineTo(centerX - 100, centerY - 100);
+  ctx.moveTo(startX, startY);
+  ctx.lineTo(startX + dx, startY + dy);
   ctx.stroke();
-  
-  // 左（理想）
-  ctx.beginPath();
-  ctx.moveTo(centerX - 90, centerY - 120); // 開始位置
-  ctx.lineTo(centerX - 150, centerY - 230); // 終了位置
-  ctx.stroke();
-  
-  // 右（実際）
-  ctx.beginPath();
-  ctx.moveTo(centerX + 90, centerY - 120);
-  ctx.lineTo(centerX + 150, centerY - 230);
-  ctx.stroke();
+}
+
+// 左
+drawGuideLine(leftArc, -60, -120);
+
+// 右
+drawGuideLine(rightArc, 60, -120);
 
   ctx.restore();
 
