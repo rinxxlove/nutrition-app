@@ -657,7 +657,7 @@ ctx.strokeStyle = "#888";
 ctx.lineWidth = 1;
 
 // 左上（C）
-const leftArc = outerMeta.data[0];
+const leftArc = outerMeta.data[2];
 
 // 右上（P）
 const rightArc = outerMeta.data[0];
@@ -683,10 +683,10 @@ function drawGuideLine(arc, dx, dy){
 }
 
 // 左
-drawGuideLine(leftArc, -50, -50);
+drawGuideLine(leftArc, -30, -120);
 
 // 右
-drawGuideLine(rightArc, 50, -50);
+drawGuideLine(rightArc, 30, -120);
 
   ctx.restore();
 
