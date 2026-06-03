@@ -98,18 +98,19 @@ button:hover{
 }
 
 .nutrient{
-  margin-bottom:45px;
+  margin-bottom:20px;
 }
 
 .nutrient-header{
   display:flex;
   justify-content:space-between;
-  margin-bottom:8px;
+  margin-bottom:4px;
+  font-size:13px;
 }
 
 .bar{
   position:relative;
-  height:12px;
+  height:10px;
   background:#e0e0e0;
   border-radius:999px;
 }
@@ -387,44 +388,12 @@ button:hover{
 
 }
 
-/* スマホ対応 */
-
-@media (max-width:768px){
-
-  .chart-layout{
-
-    flex-direction:column;
-
-  }
-
-  .chart-labels{
-
-    width:100%;
-
-    order:2;
-
-  }
-
-  .pfc-center{
-
-    width:100%;
-
-    max-width:350px;
-
-    order:1;
-
-  }
-
-  .label-row.top,
-
-  .label-row.bottom{
-
-    margin:10px 0;
-
-    transform:none;
-
-  }
-
+.chart-layout{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  flex-wrap:nowrap;
 }
 
 </style>
