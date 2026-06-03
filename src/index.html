@@ -401,6 +401,32 @@ button:hover{
 
 @media (max-width:768px){
 
+  .card{
+
+    padding:18px;
+
+  }
+
+  .input-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+  }
+
+  .input-group{
+    min-width:0;
+  }
+
+  .input-group label{
+
+    font-size:10px;
+
+  }
+
+  .input-group input{
+    width:100%;
+    min-width:0;
+  }
+
   .chart-layout{
     flex-direction:column;
     align-items:center;
@@ -427,14 +453,14 @@ button:hover{
   }
 
   .pfc-center{
-    width:300px;
-    height:300px;
+    width:260px;
+    height:260px;
     max-width:none;
   }
 
   #pfcChart{
-    width:300px !important;
-    height:300px !important;
+    width:260px !important;
+    height:260px !important;
   }
 
 }
@@ -672,7 +698,7 @@ afterDraw(chart) {
 
   ctx.fillStyle = "#666";
 
-  ctx.font = "12px sans-serif";
+  ctx.font = "8px sans-serif";
 
   ctx.fillText(
     "実際と理想の",
@@ -680,7 +706,7 @@ afterDraw(chart) {
     centerY - 15
   );
 
-  ctx.font = "bold 16px sans-serif";
+  ctx.font = "bold 12px sans-serif";
 
   ctx.fillText(
     "PFCバランス",
@@ -696,7 +722,7 @@ afterDraw(chart) {
     chart.getDatasetMeta(0);
 
   ctx.fillStyle = "#fff";
-  ctx.font = "bold 14px sans-serif";
+  ctx.font = "bold 8px sans-serif";
 
   outerMeta.data.forEach((arc,index)=>{
 
@@ -731,7 +757,7 @@ afterDraw(chart) {
     chart.getDatasetMeta(1);
 
   ctx.fillStyle = "#fff";
-  ctx.font = "bold 12px sans-serif";
+  ctx.font = "bold 6px sans-serif";
 
   innerMeta.data.forEach((arc,index)=>{
 
