@@ -662,10 +662,11 @@ const leftArc = outerMeta.data[2];
 // 右上（P）
 const rightArc = outerMeta.data[0];
 
-function drawGuideLine(arc, dx, dy){
+function drawGuideLine(arc, dx, dy, angleOffset){
 
   const angle =
-    (arc.startAngle + arc.endAngle) / 2;
+    ((arc.startAngle + arc.endAngle) / 2)
+    + angleOffset;
 
   const startX =
     arc.x + Math.cos(angle) * (arc.outerRadius + 2);
@@ -680,10 +681,10 @@ function drawGuideLine(arc, dx, dy){
 }
 
 // 左
-drawGuideLine(leftArc, -50, -140);
+drawGuideLine(leftArc, -50, -140, 0.3);
 
 // 右
-drawGuideLine(rightArc, 50, -140);
+drawGuideLine(rightArc, 50, -140, -0.3);
 
   ctx.restore();
 
