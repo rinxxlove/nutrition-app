@@ -756,7 +756,7 @@ afterDraw(chart) {
     chart.getDatasetMeta(1);
 
   ctx.fillStyle = "#fff";
-  ctx.font = "bold 4px sans-serif";
+  ctx.font = "bold 8px sans-serif";
 
   innerMeta.data.forEach((arc,index)=>{
 
@@ -840,7 +840,7 @@ const chart = new Chart(ctx,{
   }
 },
 
-plugins:[]
+plugins:[centerTextPlugin]
 });
 
 function calculate(){
