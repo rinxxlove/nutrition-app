@@ -673,9 +673,6 @@ function drawGuideLine(arc, dx, dy){
   const startY =
     arc.y + Math.sin(angle) * (arc.outerRadius + 2);
 
-  ctx.strokeStyle = "red";
-  ctx.lineWidth = 3;
-
   ctx.beginPath();
   ctx.moveTo(startX, startY);
   ctx.lineTo(startX + dx, startY + dy);
@@ -683,7 +680,7 @@ function drawGuideLine(arc, dx, dy){
 }
 
 // 左
-drawGuideLine(leftArc, -30, -120);
+drawGuideLine(leftArc, -15, -80);
 
 // 右
 drawGuideLine(rightArc, 30, -120);
