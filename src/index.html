@@ -668,10 +668,10 @@ function drawGuideLine(arc, dx, dy){
     (arc.startAngle + arc.endAngle) / 2;
 
   const startX =
-    arc.x + Math.cos(angle) * (arc.outerRadius + 10);
+    arc.x + Math.cos(angle) * (arc.outerRadius + 2);
 
   const startY =
-    arc.y + Math.sin(angle) * (arc.outerRadius + 10);
+    arc.y + Math.sin(angle) * (arc.outerRadius + 2);
 
   ctx.beginPath();
   ctx.moveTo(startX, startY);
@@ -680,10 +680,10 @@ function drawGuideLine(arc, dx, dy){
 }
 
 // 左
-drawGuideLine(leftArc, -60, -120);
+drawGuideLine(leftArc, -50, -140);
 
 // 右
-drawGuideLine(rightArc, 60, -120);
+drawGuideLine(rightArc, 50, -140);
 
   ctx.restore();
 
