@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>栄養管理アプリ</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:sans-serif;
+  background:#f5f6f8;
+  padding:30px;
+}
+
+.container{
+  max-width:1200px;
+  margin:auto;
+}
+
+h1{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.card{
+  background:white;
+  border-radius:16px;
+  padding:24px;
+  margin-bottom:24px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+h2{
+  margin-bottom:20px;
+}
+
+.input-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+}
+
+.input-group{
+  display:flex;
+  flex-direction:column;
+}
+
+.input-group label{
+  margin-bottom:6px;
+  font-size:14px;
+}
+
+.input-group input{
+  padding:10px;
+  border:1px solid #ccc;
+  border-radius:8px;
+}
+
+button{
+  margin-top:20px;
+  padding:12px 24px;
+  border:none;
+  border-radius:8px;
+  background:#4285f4;
+  color:white;
+  cursor:pointer;
+  font-size:16px;
+}
+
+button:hover{
+  opacity:0.9;
+}
+
+.chart-container{
+    width:100%;
+  max-width:900px;
+  margin:auto;
+}
+
+.summary{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  margin-top:20px;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.nutrient{
+  margin-bottom:45px;
+}
+
+.nutrient-header{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+
+.bar{
+  position:relative;
+  height:12px;
+  background:#e0e0e0;
+  border-radius:999px;
+}
+
+.target-min,
+.target-max{
+  position:absolute;
+  top:-6px;
+  width:2px;
+  height:24px;
+  background:#999;
+}
+
+.target-label{
+  position:absolute;
+  top:20px;
+  transform:translateX(-50%);
+  font-size:12px;
+  color:#888;
+  white-space:nowrap;
+}
+
+.fill{
+  height:100%;
+  background:#4a90e2;
+  border-radius:999px;
+}
+
+.pfc-top,
+.pfc-bottom{
+  text-align:center;
+  font-size:15px;
+  font-weight:600;
+  margin:10px 0;
+}
+
+.pfc-layout{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:40px;
+}
+
+.pfc-left{
+  width:180px;
+}
+
+.guide-line{
+  display:flex;
+  align-items:center;
+  margin:40px 0;
+  color:#666;
+  font-weight:600;
+}
+
+.guide-line::after{
+  content:"";
+  flex:1;
+  height:2px;
+  background:#cfcfcf;
+  margin-left:12px;
+}
+
+.pfc-center{
+  width:450px;
+}
+
+.pfc-right{
+  width:180px;
+}
+
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:20px 0;
+  font-size:16px;
+}
+
+.dot{
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  display:inline-block;
+}
+
+.dot.p{
+  background:#4A90E2;
+}
+
+.dot.f{
+  background:#F5C542;
+}
+
+.dot.c{
+  background:#FF6B6B;
+}
+
+.pfc-summary{
+
+  width:100%;
+
+  max-width:none;
+
+  margin:15px auto;
+
+  display:grid;
+
+  grid-template-columns:repeat(3,1fr);
+
+  border:1px solid #e5e5e5;
+
+  border-radius:12px;
+
+  overflow:hidden;
+
+  background:#fff;
+
+}
+
+.summary-item{
+
+  text-align:center;
+
+  border-right:1px solid #e5e5e5;
+
+}
+
+.summary-item:last-child{
+
+  border-right:none;
+
+}
+
+.summary-title{
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  gap:8px;
+
+  padding:8px;
+
+  border-bottom:1px solid #e5e5e5;
+
+  font-size:14px;
+
+  color:#666;
+
+  white-space:nowrap;
+
+}
+
+.summary-value{
+
+  padding:6px;
+
+  font-size:42px;
+
+  font-weight:700;
+
+  line-height:1;
+
+}
+
+.summary-value small{
+
+  display:block;
+
+  margin-top:4px;
+
+  font-size:14px;
+
+  color:#888;
+
+  font-weight:400;
+
+}
+
+.dot{
+
+  width:14px;
+
+  height:14px;
+
+  border-radius:50%;
+
+  display:inline-block;
+
+}
+
+.dot.p{
+
+  background:#4A90E2;
+
+}
+
+.dot.f{
+
+  background:#F5C542;
+
+}
+
+.dot.c{
+
+  background:#FF6B6B;
+
+}
+
+#pfcChart{
+  width:100% !important;
+  height:550px !important;
+}
+
+.chart-layout{
+  display:flex;
+  justify-content:flex-center;
+  align-items:center;
+  gap:10px;
+}
+
+.chart-labels{
+  width:190px;
+  flex-shrink:0;
+}
+
+.label-row{
+  display:flex;
+  align-items:center;
+  white-space:nowrap;
+  color:#666;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.label-row.top{
+  margin-bottom:165px;
+  transform:translateY(55px);
+}
+
+.label-row.bottom{
+  margin-top:55px;
+  margin-left:40px;
+  transform:translate(25px,-30px);
+}
+
+.line{
+  flex:none;
+  min-width:140px;
+  height:2px;
+  background:#cfcfcf;
+  margin-left:15px;
+}
+
+/* 外側 */
+.label-row.top .line{
+  min-width:125px;
+}
+
+/* 内側 */
+.label-row.bottom .line{
+  min-width:145px;
+}
+
+.pfc-center{
+  width:450px;
+}
+
+.pfc-summary{
+
+ display:none;
+
+}
+
+/* スマホ対応 */
+
+@media (max-width:768px){
+
+  .chart-layout{
+
+    flex-direction:column;
+
+  }
+
+  .chart-labels{
+
+    width:100%;
+
+    order:2;
+
+  }
+
+  .pfc-center{
+
+    width:100%;
+
+    max-width:350px;
+
+    order:1;
+
+  }
+
+  .label-row.top,
+
+  .label-row.bottom{
+
+    margin:10px 0;
+
+    transform:none;
+
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>栄養管理アプリ</h1>
+
+<section class="card">
+<h2>栄養入力</h2>
+
+<div class="input-grid">
+
+<div class="input-group">
+<label>摂取カロリー(kcal)</label>
+<input type="number" id="calories">
+</div>
+
+<div class="input-group">
+<label>たんぱく質(g)</label>
+<input type="number" id="protein">
+</div>
+
+<div class="input-group">
+<label>脂質(g)</label>
+<input type="number" id="fat">
+</div>
+
+<div class="input-group">
+<label>炭水化物(g)</label>
+<input type="number" id="carb">
+</div>
+
+<div class="input-group">
+<label>食物繊維(g)</label>
+<input type="number" id="fiber">
+</div>
+
+<div class="input-group">
+<label>ビタミンA(μg)</label>
+<input type="number" id="vitaminA">
+</div>
+
+<div class="input-group">
+<label>ビタミンB1(mg)</label>
+<input type="number" id="vitaminB1">
+</div>
+
+<div class="input-group">
+<label>ビタミンB2(mg)</label>
+<input type="number" id="vitaminB2">
+</div>
+
+<div class="input-group">
+<label>ビタミンC(mg)</label>
+<input type="number" id="vitaminC">
+</div>
+
+<div class="input-group">
+<label>塩分(g)</label>
+<input type="number" id="salt">
+</div>
+
+<div class="input-group">
+<label>カルシウム(mg)</label>
+<input type="number" id="calcium">
+</div>
+
+<div class="input-group">
+<label>鉄(mg)</label>
+<input type="number" id="iron">
+</div>
+
+</div>
+
+<button onclick="calculate()">計算する</button>
+
+</section>
+
+<section class="card">
+  <h2>PFCバランス</h2>
+
+  <div class="chart-layout">
+
+    <div class="chart-labels">
+
+      <div class="label-row top">
+        <span>外側：実際</span>
+        <div class="line"></div>
+      </div>
+
+      <div class="label-row bottom">
+        <span>内側：理想</span>
+        <div class="line"></div>
+      </div>
+
+    </div>
+
+    <div class="pfc-center">
+      <canvas id="pfcChart"></canvas>
+    </div>
+
+  </div>
+
+  <div class="pfc-summary">
+
+    <div class="summary-item">
+      <div class="summary-title">
+        <span class="dot p"></span>
+        P（たんぱく質）
+      </div>
+
+      <div class="summary-value">
+        <span id="actualP">0</span>%
+        <small>(理想18%)</small>
+      </div>
+    </div>
+
+    <div class="summary-item">
+      <div class="summary-title">
+        <span class="dot f"></span>
+        F（脂質）
+      </div>
+
+      <div class="summary-value">
+        <span id="actualF">0</span>%
+        <small>(理想25%)</small>
+      </div>
+    </div>
+
+    <div class="summary-item">
+      <div class="summary-title">
+        <span class="dot c"></span>
+        C（炭水化物）
+      </div>
+
+      <div class="summary-value">
+        <span id="actualC">0</span>%
+        <small>(理想57%)</small>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="card">
+<h2>摂取量と理想量</h2>
+
+<div id="nutritionList"></div>
+
+</section>
+
+</div>
+
+<script>
+
+const nutritionTargets = {
+  calories: { min:1000, max:1000 },
+
+  protein: { min:35, max:45 },
+  fat: { min:20, max:30 },
+  carb: { min:120, max:150 },
+
+  fiber: { min:8, max:8 },
+  vitaminA: { min:300, max:300 },
+  vitaminB1: { min:0.5, max:0.5 },
+  vitaminB2: { min:0.6, max:0.6 },
+  vitaminC: { min:40, max:40 },
+  salt: { min:2.5, max:2.5 },
+  calcium: { min:300, max:300 },
+  iron: { min:3.2, max:3.2 }
+};
+
+const labels = {
+ calories:"カロリー",
+ protein:"たんぱく質",
+ fat:"脂質",
+ carb:"炭水化物",
+ fiber:"食物繊維",
+ vitaminA:"ビタミンA",
+ vitaminB1:"ビタミンB1",
+ vitaminB2:"ビタミンB2",
+ vitaminC:"ビタミンC",
+ salt:"塩分",
+ calcium:"カルシウム",
+ iron:"鉄"
+};
+
+const units = {
+ calories:"kcal",
+ protein:"g",
+ fat:"g",
+ carb:"g",
+ fiber:"g",
+ vitaminA:"μg",
+ vitaminB1:"mg",
+ vitaminB2:"mg",
+ vitaminC:"mg",
+ salt:"g",
+ calcium:"mg",
+ iron:"mg"
+};
+
+const ctx = document.getElementById("pfcChart");
+
+const centerTextPlugin = {
+id: "centerText",
+
+afterDraw(chart) {
+
+  const { ctx } = chart;
+
+  const centerX =
+    (chart.chartArea.left +
+    chart.chartArea.right) / 2;
+
+  const centerY =
+    (chart.chartArea.top +
+    chart.chartArea.bottom) / 2;
+
+  ctx.save();
+
+  // =====================
+  // 中央タイトル
+  // =====================
+
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  ctx.fillStyle = "#666";
+
+  ctx.font = "14px sans-serif";
+
+  ctx.fillText(
+    "実際と理想の",
+    centerX,
+    centerY - 15
+  );
+
+  ctx.font = "bold 20px sans-serif";
+
+  ctx.fillText(
+    "PFCバランス",
+    centerX,
+    centerY + 20
+  );
+
+  // =====================
+  // 外側リング数値
+  // =====================
+
+  const outerMeta =
+    chart.getDatasetMeta(0);
+
+  ctx.fillStyle = "#fff";
+  ctx.font = "bold 18px sans-serif";
+
+  outerMeta.data.forEach((arc,index)=>{
+
+    const angle =
+      (arc.startAngle + arc.endAngle) / 2;
+
+    const r =
+      (arc.innerRadius + arc.outerRadius) / 2 - 3;
+
+    const x =
+      arc.x + Math.cos(angle) * r;
+
+    const y =
+      arc.y + Math.sin(angle) * r;
+
+    const value =
+      chart.data.datasets[0].data[index];
+
+    ctx.fillText(
+      `${value}%`,
+      x,
+      y
+    );
+
+  });
+
+  // =====================
+  // 内側リング数値
+  // =====================
+
+  const innerMeta =
+    chart.getDatasetMeta(1);
+
+  ctx.fillStyle = "#fff";
+  ctx.font = "bold 16px sans-serif";
+
+  innerMeta.data.forEach((arc,index)=>{
+
+    const angle =
+      (arc.startAngle + arc.endAngle) / 2;
+
+    const r =
+      (arc.innerRadius + arc.outerRadius) / 2 - 5;
+
+    const x =
+      arc.x + Math.cos(angle) * r;
+
+    const y =
+      arc.y + Math.sin(angle) * r;
+
+    const value =
+      chart.data.datasets[1].data[index];
+
+    ctx.fillText(
+      `${value}%`,
+      x,
+      y
+    );
+
+  });
+
+  
+
+}
+};
+
+const chart = new Chart(ctx,{
+  type:"doughnut",
+
+  data:{
+    labels:["P","F","C"],
+
+    datasets:[
+
+      // 外側（実際）
+      {
+        label:"実際",
+        data:[33,33,34],
+
+        backgroundColor:[
+          "#4A90E2",
+          "#F5C542",
+          "#FF6B6B"
+        ],
+
+        radius:"92%",
+        cutout:"30%"
+      },
+
+      // 内側（理想）
+      {
+        label:"理想",
+        data:[18,25,57],
+
+        backgroundColor:[
+          "#8EC5FF",
+          "#FFE08A",
+          "#FFB0B0"
+        ],
+
+        radius:"90%",
+        cutout:"40%"
+      }
+
+    ]
+  },
+
+  options:{
+  responsive:true,
+  maintainAspectRatio:false,
+
+  plugins:{
+    legend:{
+      display:false
+    }
+  }
+},
+
+plugins:[centerTextPlugin]
+});
+
+function calculate(){
+
+ const protein = Number(document.getElementById("protein").value) || 0;
+ const fat = Number(document.getElementById("fat").value) || 0;
+ const carb = Number(document.getElementById("carb").value) || 0;
+
+ const proteinCal = protein * 4;
+ const fatCal = fat * 9;
+ const carbCal = carb * 4;
+
+ const totalCal = proteinCal + fatCal + carbCal;
+
+ if(totalCal === 0) return;
+
+ const p = Math.round((proteinCal/totalCal)*100);
+ const f = Math.round((fatCal/totalCal)*100);
+ const c = Math.round((carbCal/totalCal)*100);
+
+ document.getElementById("actualP").textContent = p;
+ document.getElementById("actualF").textContent = f;
+ document.getElementById("actualC").textContent = c;
+
+ chart.data.datasets[0].data = [p,f,c];
+ chart.update();
+
+ createBars();
+}
+
+function createBars(){
+
+ const container = document.getElementById("nutritionList");
+ container.innerHTML = "";
+
+ Object.keys(nutritionTargets).forEach(key=>{
+
+  const actual =
+   Number(document.getElementById(key)?.value) || 0;
+
+  const target = nutritionTargets[key];
+
+  // グラフの最大値
+  const maxScale = target.max * 1.5;
+
+  // バーの長さ
+  const percent =
+   Math.min((actual / maxScale) * 100, 100);
+
+  // 最小理想値の位置
+  const minLine =
+   (target.min / maxScale) * 100;
+
+  // 最大理想値の位置
+  const maxLine =
+   (target.max / maxScale) * 100;
+
+  container.innerHTML += `
+  <div class="nutrient">
+
+    <div class="nutrient-header">
+      <span>${labels[key]}</span>
+      <span>
+        ${actual}${units[key]}
+      </span>
+    </div>
+
+    <div class="bar">
+
+      <div
+        class="fill"
+        style="
+          width:${percent}%;
+          background:#4A90E2;
+        ">
+      </div>
+
+      <div
+  class="target-min"
+  style="left:${minLine}%">
+</div>
+
+<div
+  class="target-label"
+  style="left:${minLine}%">
+  ${target.min}
+</div>
+
+<div
+  class="target-max"
+  style="left:${maxLine}%">
+</div>
+
+${target.min !== target.max ? `
+<div
+  class="target-label"
+  style="left:${maxLine}%">
+  ${target.max}
+</div>
+` : ""}
+
+    </div>
+
+  </div>
+  `;
+ });
+
+}
+
+createBars();
+
+</script>
+
+</body>
+</html>
