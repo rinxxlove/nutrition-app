@@ -544,14 +544,11 @@ afterDraw(chart) {
 
   const { ctx } = chart;
 
-  const centerX =
-    (chart.chartArea.left +
-    chart.chartArea.right) / 2;
-
-  const centerY =
-    (chart.chartArea.top +
-    chart.chartArea.bottom) / 2;
-
+  const startX =
+  arc.x + Math.cos(angle) * (arc.outerRadius - 8);
+  
+  const startY =
+  arc.y + Math.sin(angle) * (arc.outerRadius - 8);
   ctx.save();
 
   // =====================
@@ -658,13 +655,13 @@ ctx.lineWidth = 1.5;
 
 // 左
 ctx.beginPath();
-ctx.moveTo(centerX - 60, centerY - 190);
+ctx.moveTo(centerX - 80, centerY - 190);
 ctx.lineTo(centerX - 10, centerY - 60);
 ctx.stroke();
 
 // 右
 ctx.beginPath();
-ctx.moveTo(centerX + 60, centerY - 170);
+ctx.moveTo(centerX + 80, centerY - 170);
 ctx.lineTo(centerX + 20, centerY - 75);
 ctx.stroke();
 
