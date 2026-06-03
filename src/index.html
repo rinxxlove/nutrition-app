@@ -703,7 +703,7 @@ afterDraw(chart) {
   ctx.fillText(
     "実際と理想の",
     centerX,
-    centerY - 12
+    centerY - 15
   );
 
   ctx.font = "bold 12px sans-serif";
@@ -711,7 +711,7 @@ afterDraw(chart) {
   ctx.fillText(
     "PFCバランス",
     centerX,
-    centerY + 5
+    centerY
   );
 
   // =====================
@@ -722,7 +722,7 @@ afterDraw(chart) {
     chart.getDatasetMeta(0);
 
   ctx.fillStyle = "#fff";
-  ctx.font = "bold 8px sans-serif";
+  ctx.font = "bold 10px sans-serif";
 
   outerMeta.data.forEach((arc,index)=>{
 
@@ -757,7 +757,7 @@ afterDraw(chart) {
     chart.getDatasetMeta(1);
 
   ctx.fillStyle = "#fff";
-  ctx.font = "bold 4px sans-serif";
+  ctx.font = "bold 6px sans-serif";
 
   innerMeta.data.forEach((arc,index)=>{
 
