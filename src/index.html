@@ -772,6 +772,9 @@ afterDraw(chart) {
     const y =
       arc.y + Math.sin(angle) * r;
 
+      const value =
+        chart.data.datasets[1].data[index];
+
     ctx.fillText(
       `${value}%`,
       x,
