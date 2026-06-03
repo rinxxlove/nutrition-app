@@ -654,36 +654,19 @@ afterDraw(chart) {
  // // =====================
 
 ctx.strokeStyle = "#888";
-ctx.lineWidth = 1;
-
-// 左上（C）
-const leftArc = outerMeta.data[2];
-
-// 右上（P）
-const rightArc = outerMeta.data[0];
-
-function drawGuideLine(arc, dx, dy){
-
-  const angle =
-    (arc.startAngle + arc.endAngle) / 2;
-
-  const startX =
-    arc.x + Math.cos(angle) * (arc.outerRadius + 2);
-
-  const startY =
-    arc.y + Math.sin(angle) * (arc.outerRadius + 2);
-
-  ctx.beginPath();
-  ctx.moveTo(startX, startY);
-  ctx.lineTo(startX + dx, startY + dy);
-  ctx.stroke();
-}
+ctx.lineWidth = 1.5;
 
 // 左
-drawGuideLine(leftArc, -15, -80);
+ctx.beginPath();
+ctx.moveTo(centerX - 40, centerY - 170);
+ctx.lineTo(centerX - 10, centerY - 75);
+ctx.stroke();
 
 // 右
-drawGuideLine(rightArc, 30, -120);
+ctx.beginPath();
+ctx.moveTo(centerX + 40, centerY - 170);
+ctx.lineTo(centerX + 10, centerY - 75);
+ctx.stroke();
 
   ctx.restore();
 
