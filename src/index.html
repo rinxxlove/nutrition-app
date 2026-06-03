@@ -653,8 +653,8 @@ afterDraw(chart) {
   // // ガイド線
   // // =====================
   
-  ctx.strokeStyle = "666";
-  ctx.lineWidth = 2;
+  ctx.strokeStyle = "777";
+  ctx.lineWidth = 1;
   
   ctx.beginPath();
   ctx.moveTo(centerX, centerY);
@@ -663,14 +663,14 @@ afterDraw(chart) {
   
   // 左（理想）
   ctx.beginPath();
-  ctx.moveTo(centerX - 105, centerY - 120); // 開始位置
-  ctx.lineTo(centerX - 150, centerY - 250); // 終了位置
+  ctx.moveTo(centerX - 70, centerY - 120); // 開始位置
+  ctx.lineTo(centerX - 95, centerY - 230); // 終了位置
   ctx.stroke();
   
   // 右（実際）
   ctx.beginPath();
-  ctx.moveTo(centerX + 105, centerY - 120);
-  ctx.lineTo(centerX + 150, centerY - 250);
+  ctx.moveTo(centerX + 70, centerY - 120);
+  ctx.lineTo(centerX + 95, centerY - 230);
   ctx.stroke();
 
   ctx.restore();
