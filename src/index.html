@@ -544,11 +544,14 @@ afterDraw(chart) {
 
   const { ctx } = chart;
 
-  const startX =
-  arc.x + Math.cos(angle) * (arc.outerRadius - 8);
-  
-  const startY =
-  arc.y + Math.sin(angle) * (arc.outerRadius - 8);
+  const centerX =
+    (chart.chartArea.left +
+    chart.chartArea.right) / 2;
+
+  const centerY =
+    (chart.chartArea.top +
+    chart.chartArea.bottom) / 2;
+
   ctx.save();
 
   // =====================
