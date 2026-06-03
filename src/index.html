@@ -549,21 +549,21 @@ button:hover{
 <section class="card">
   <h2>PFCバランス</h2>
 
-  <div class="chart-layout">
+  <div class="pfc-guide">
 
-    <div class="chart-labels">
+  <div class="guide-item ideal">
+    <span>内側：理想</span>
+  </div>
 
-      <div class="label-row top">
-        <span>外側：実際</span>
-        <div class="line"></div>
-      </div>
+  <div class="guide-item actual">
+    <span>外側：実際</span>
+  </div>
 
-      <div class="label-row bottom">
-        <span>内側：理想</span>
-        <div class="line"></div>
-      </div>
+</div>
 
-    </div>
+<div class="pfc-center">
+  <canvas id="pfcChart"></canvas>
+</div>
 
     <div class="pfc-center">
       <canvas id="pfcChart"></canvas>
