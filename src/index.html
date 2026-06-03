@@ -86,20 +86,6 @@ button:hover{
   opacity:0.9;
 }
 
-.chart-container{
-    width:100%;
-  max-width:900px;
-  margin:auto;
-}
-
-.summary{
-  display:flex;
-  justify-content:center;
-  gap:30px;
-  margin-top:20px;
-  font-size:18px;
-  font-weight:bold;
-}
 
 .nutrient{
   margin-bottom:20px;
@@ -143,62 +129,15 @@ button:hover{
   border-radius:999px;
 }
 
-.pfc-top,
-.pfc-bottom{
-  text-align:center;
-  font-size:15px;
-  font-weight:600;
-  margin:10px 0;
-}
-
-.pfc-layout{
+.pfc-guide{
   display:flex;
+  justify-content:space-between;
   align-items:center;
-  justify-content:center;
-  gap:40px;
-}
-
-.pfc-left{
-  width:180px;
-}
-
-.guide-line{
-  display:flex;
-  align-items:center;
-  margin:40px 0;
+  max-width:450px;
+  margin:0 auto 20px;
   color:#666;
-  font-weight:600;
-}
-
-.guide-line::after{
-  content:"";
-  flex:1;
-  height:2px;
-  background:#cfcfcf;
-  margin-left:12px;
-}
-
-.pfc-center{
-  width:450px;
-}
-
-.pfc-right{
-  width:180px;
-}
-
-.legend-item{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin:20px 0;
-  font-size:16px;
-}
-
-.dot{
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  display:inline-block;
+  font-size:20px;
+  font-weight:bold;
 }
 
 .dot.p{
@@ -332,72 +271,17 @@ button:hover{
   height:550px !important;
 }
 
-.chart-layout{
-  display:flex;
-  justify-content:flex-center;
-  align-items:center;
-  gap:10px;
-}
-
-.chart-labels{
-  width:190px;
-  flex-shrink:0;
-}
-
-.label-row{
-  display:flex;
-  align-items:center;
-  white-space:nowrap;
-  color:#666;
-  font-size:20px;
-  font-weight:bold;
-}
-
-.label-row.top{
-  margin-bottom:165px;
-  transform:translateY(55px);
-}
-
-.label-row.bottom{
-  margin-top:55px;
-  margin-left:40px;
-  transform:translate(25px,-30px);
-}
-
-.line{
-  flex:none;
-  min-width:140px;
-  height:2px;
-  background:#cfcfcf;
-  margin-left:15px;
-}
-
-/* 外側 */
-.label-row.top .line{
-  min-width:125px;
-}
-
-/* 内側 */
-.label-row.bottom .line{
-  min-width:145px;
-}
-
 .pfc-center{
   width:450px;
 }
 
 .pfc-summary{
-
  display:none;
-
 }
 
-.chart-layout{
+.guide-item{
   display:flex;
-  justify-content:center;
   align-items:center;
-  gap:10px;
-  flex-wrap:nowrap;
 }
 
 @media (max-width:768px){
@@ -428,31 +312,6 @@ button:hover{
     min-width:0;
   }
 
-  .chart-layout{
-    flex-direction:column;
-    align-items:center;
-    gap:4px;
-  }
-
-  .chart-labels{
-    width:auto;
-  }
-
-  .label-row{
-    justify-content:center;
-    font-size:16px;
-  }
-
-  .label-row.top,
-  .label-row.bottom{
-    margin:0;
-    transform:none;
-  }
-
-  .line{
-    display:none;
-  }
-
   .pfc-center{
     width:260px;
     height:260px;
@@ -465,28 +324,13 @@ button:hover{
   }
 
   .pfc-guide{
-  position:relative;
-  width:450px;
-  height:80px;
-  margin:0 auto;
-}
+    max-width:260px;
+    font-size:14px;
+  }
 
-.guide-item{
-  position:absolute;
-  font-size:20px;
-  font-weight:bold;
-  color:#666;
-}
-
-.guide-item.ideal{
-  left:20px;
-  top:10px;
-}
-
-.guide-item.actual{
-  right:20px;
-  top:10px;
-}
+  body{
+    padding:12px;
+  }
 
 }
 
@@ -574,25 +418,17 @@ button:hover{
   <h2>PFCバランス</h2>
 
   <div class="pfc-guide">
-
-  <div class="guide-item ideal">
-    <span>内側：理想</span>
-  </div>
-
-  <div class="guide-item actual">
-    <span>外側：実際</span>
-  </div>
-
-</div>
-
-<div class="pfc-center">
-  <canvas id="pfcChart"></canvas>
-</div>
-
-    <div class="pfc-center">
-      <canvas id="pfcChart"></canvas>
+    <div class="guide-item ideal">
+      <span>内側：理想</span>
     </div>
 
+    <div class="guide-item actual">
+      <span>外側：実際</span>
+    </div>
+  </div>
+
+  <div class="pfc-center">
+    <canvas id="pfcChart"></canvas>
   </div>
 
   <div class="pfc-summary">
